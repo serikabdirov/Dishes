@@ -9,5 +9,7 @@ target 'Dishes' do
 pod 'RxSwift', '6.5.0'
     pod 'RxCocoa', '6.5.0'
 pod 'SnapKit', '~> 5.6.0'
+pod 'Nuke', '~> 10.7'
+pod 'Alamofire'
 
 end

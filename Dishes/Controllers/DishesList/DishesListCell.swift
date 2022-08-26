@@ -8,6 +8,7 @@
 import UIKit
 
 class DishesListCell: UICollectionViewCell {
+    
     static let cellIdentifier = "disheCell"
     
     var imageView: UIImageView!
@@ -82,9 +83,8 @@ class DishesListCell: UICollectionViewCell {
         }
     }
     
-    func setupCell(dishImage: UIImage, dishName: String, dishPrice: String) {
-        imageView.image = dishImage
+    func setupCell(dishName: String, dishPrice: Int) {
         nameLabel.text = dishName
-        priceLabel.text = dishPrice
+        priceLabel.text = "\(dishPrice)"
     }
 }

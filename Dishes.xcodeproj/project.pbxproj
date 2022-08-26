@@ -20,6 +20,8 @@
 		B2E863BF28B8C1A500E7BB0C /* DishesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E863B728B8C1A500E7BB0C /* DishesListCell.swift */; };
 		B2E863C028B8C1A500E7BB0C /* DishesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E863B828B8C1A500E7BB0C /* DishesListView.swift */; };
 		B2E863C128B8C1A500E7BB0C /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E863B928B8C1A500E7BB0C /* MainTabBarController.swift */; };
+		B2E863C428B8C2BA00E7BB0C /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E863C328B8C2BA00E7BB0C /* Model.swift */; };
+		B2E863C628B8EA4200E7BB0C /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E863C528B8EA4200E7BB0C /* InfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,8 @@
 		B2E863B728B8C1A500E7BB0C /* DishesListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DishesListCell.swift; sourceTree = "<group>"; };
 		B2E863B828B8C1A500E7BB0C /* DishesListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DishesListView.swift; sourceTree = "<group>"; };
 		B2E863B928B8C1A500E7BB0C /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		B2E863C328B8C2BA00E7BB0C /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		B2E863C528B8EA4200E7BB0C /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		DC640304243E4CC7D9CF31E1 /* Pods_Dishes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dishes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -105,6 +109,7 @@
 		B2E863AF28B8C1A500E7BB0C /* Dishes */ = {
 			isa = PBXGroup;
 			children = (
+				B2E863C228B8C2A600E7BB0C /* Model */,
 				B2E863B428B8C1A500E7BB0C /* Controllers */,
 			);
 			path = Dishes;
@@ -115,10 +120,7 @@
 			children = (
 				B2E863B928B8C1A500E7BB0C /* MainTabBarController.swift */,
 				B2E863B528B8C1A500E7BB0C /* DishesList */,
-				B2E863B028B8C1A500E7BB0C /* SearchViewController.swift */,
-				B2E863B128B8C1A500E7BB0C /* MoreViewController.swift */,
-				B2E863B228B8C1A500E7BB0C /* ShoppingCartViewController.swift */,
-				B2E863B328B8C1A500E7BB0C /* ProfileViewController.swift */,
+				B2E863C728B8EB2300E7BB0C /* AnotherControllerrs */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -127,10 +129,30 @@
 			isa = PBXGroup;
 			children = (
 				B2E863B628B8C1A500E7BB0C /* DishesListViewController.swift */,
-				B2E863B728B8C1A500E7BB0C /* DishesListCell.swift */,
 				B2E863B828B8C1A500E7BB0C /* DishesListView.swift */,
+				B2E863B728B8C1A500E7BB0C /* DishesListCell.swift */,
 			);
 			path = DishesList;
+			sourceTree = "<group>";
+		};
+		B2E863C228B8C2A600E7BB0C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B2E863C328B8C2BA00E7BB0C /* Model.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B2E863C728B8EB2300E7BB0C /* AnotherControllerrs */ = {
+			isa = PBXGroup;
+			children = (
+				B2E863B028B8C1A500E7BB0C /* SearchViewController.swift */,
+				B2E863B128B8C1A500E7BB0C /* MoreViewController.swift */,
+				B2E863B228B8C1A500E7BB0C /* ShoppingCartViewController.swift */,
+				B2E863B328B8C1A500E7BB0C /* ProfileViewController.swift */,
+				B2E863C528B8EA4200E7BB0C /* InfoViewController.swift */,
+			);
+			path = AnotherControllerrs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,7 +277,9 @@
 				B2E863C028B8C1A500E7BB0C /* DishesListView.swift in Sources */,
 				B2E863BE28B8C1A500E7BB0C /* DishesListViewController.swift in Sources */,
 				B2B458AB28B89D8D00D58830 /* AppDelegate.swift in Sources */,
+				B2E863C428B8C2BA00E7BB0C /* Model.swift in Sources */,
 				B2B458AD28B89D8D00D58830 /* SceneDelegate.swift in Sources */,
+				B2E863C628B8EA4200E7BB0C /* InfoViewController.swift in Sources */,
 				B2E863BC28B8C1A500E7BB0C /* ShoppingCartViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

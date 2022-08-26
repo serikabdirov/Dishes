@@ -11,8 +11,6 @@ class MainTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tabBar.backgroundColor = .black
-//        tabBar.layer.cornerRadius = 15
         tabBar.unselectedItemTintColor = UIColor(red: 225/255, green: 215/255, blue: 200/255, alpha: 1)
         tabBar.tintColor = UIColor(red: 170/255, green: 205/255, blue: 95/255, alpha: 1)
         setupTapBar()
