@@ -7,10 +7,12 @@
 
 import UIKit
 import Nuke
+import RxCocoa
+import RxSwift
 
 class DishesListViewController: UIViewController {
     
-    private var data: [Result]?
+    private let disposeBag = DisposeBag()
     
     private var dishesListView: DishesListView!
 
@@ -18,15 +20,25 @@ class DishesListViewController: UIViewController {
         super.viewDidLoad()
         dishesListView = DishesListView()
         
-        fetchData { data in
-            self.data = data
-            self.dishesListView.dishesCollectionView.reloadData()
-        }
-        
-        dishesListView.dishesCollectionView.dataSource = self
-        dishesListView.dishesCollectionView.delegate = self
         dishesListView.dishesCollectionView.register(DishesListCell.self, forCellWithReuseIdentifier: DishesListCell.cellIdentifier)
         
+        let data = request()
+        
+        let _ = data.bind(to: dishesListView.dishesCollectionView.rx.items) { (collectionView, row, element) in
+            let indexPath = IndexPath(row: row, section: 0)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DishesListCell.cellIdentifier, for: indexPath) as! DishesListCell
+            
+            let url = element.imageURL
+            let options = ImageLoadingOptions(
+              placeholder: UIImage(systemName: "multiply"),
+              transition: .fadeIn(duration: 0.5)
+            )
+            
+            Nuke.loadImage(with: url, options: options, into: cell.imageView)
+            cell.setupCell(dishName: element.name, dishPrice: element.price)
+             return cell
+            
+        }.disposed(by: disposeBag)
         self.view = dishesListView
     }
 }
@@ -36,32 +48,4 @@ extension DishesListViewController: UICollectionViewDelegate {
         let infoVC = InfoViewController()
         present(infoVC, animated: true)
     }
-}
-
-extension DishesListViewController: UICollectionViewDelegateFlowLayout {
-    
-}
-
-extension DishesListViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        data?.count ?? 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DishesListCell.cellIdentifier, for: indexPath) as! DishesListCell
-                
-        let url = data?[indexPath.row].name
-        
-        let options = ImageLoadingOptions(
-          placeholder: UIImage(named: "dishes"),
-          transition: .fadeIn(duration: 0.5)
-        )
-        
-        Nuke.loadImage(with: url, options: options, into: cell.imageView)
-        
-        cell.setupCell(dishName: data?[indexPath.row].name ?? "Name", dishPrice: data?[indexPath.row].price ?? 0)
-        return cell
-    }
-    
-    
 }

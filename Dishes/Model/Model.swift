@@ -30,6 +30,23 @@ struct Result: Codable {
     }
 }
 
+func request () -> Observable<[Result]> {
+        return Observable<[Result]>.create { observer in
+            let request = AF.request("https://m-order2.spider.ru/api/dishes").responseDecodable(of: DishesList.self) { response in
+                switch response.result {
+                case .success(let value):
+                    observer.onNext(value.results)
+                    observer.onCompleted()
+                case .failure(let error):
+                    observer.onError(error)
+                }
+            }
+            return Disposables.create {
+                request.cancel()
+            }
+        }
+    }
+
 func fetchData(complitionHandler: @escaping ([Result]) -> Void) {
     AF.request("https://m-order2.spider.ru/api/dishes").responseDecodable(of: DishesList.self) { response in
         guard let data = response.value else { return }
