@@ -17,7 +17,7 @@ struct DishesList: Codable {
 struct Result: Codable {
     var id: Int
     var name: String
-    var imageURL: URL
+    var imageURL: URL?
     var price: Int
     var weight: String
     
@@ -32,7 +32,7 @@ struct Result: Codable {
 
 func request () -> Observable<[Result]> {
         return Observable<[Result]>.create { observer in
-            let request = AF.request("https://m-order2.spider.ru/api/dishes").responseDecodable(of: DishesList.self) { response in
+            let request = AF.request("https://m-order2.spider.ru/api/dishes/?limit=100&offset=240").responseDecodable(of: DishesList.self) { response in
                 switch response.result {
                 case .success(let value):
                     observer.onNext(value.results)

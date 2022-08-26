@@ -22,7 +22,7 @@ class DishesListViewController: UIViewController {
         
         dishesListView.dishesCollectionView.register(DishesListCell.self, forCellWithReuseIdentifier: DishesListCell.cellIdentifier)
         
-        let data = request()
+        let data = request().debug()
         
         let _ = data.bind(to: dishesListView.dishesCollectionView.rx.items) { (collectionView, row, element) in
             let indexPath = IndexPath(row: row, section: 0)
