@@ -19,22 +19,14 @@ class DishesListView: UIView {
         guard let layout = dishesCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
-        switch traitCollection.horizontalSizeClass {
-        case .unspecified:
-            break
-        case .compact:
-            numbersOfItemsInLandscape = 3
-        case .regular:
-            numbersOfItemsInLandscape = 4
-        @unknown default:
-            break
-        }
+
+        numbersOfItemsInLandscape = traitCollection.horizontalSizeClass == .compact ? 3 : 4
 
         if UIDevice.current.orientation.isPortrait {
             layout.sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 20, right: 15)
             layout.itemSize = CGSize(
                 width: (dishesCollectionView.bounds.width - 45) / 2,
-                height: (dishesCollectionView.bounds.height - 30) / 3
+                height: (dishesCollectionView.bounds.height - 30) / 3.5
             )
         } else {
             layout.sectionInset = UIEdgeInsets(top: 0, left: 40, bottom: 20, right: 40)

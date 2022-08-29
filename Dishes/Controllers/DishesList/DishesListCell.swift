@@ -13,6 +13,8 @@ class DishesListCell: UICollectionViewCell {
     static let cellIdentifier = "disheCell"
 
     private var stackView: UIStackView!
+
+    private var id: Int!
     
     var imageView: UIImageView!
     var nameLabel: UILabel!
@@ -50,6 +52,7 @@ class DishesListCell: UICollectionViewCell {
         nameLabel = {
             let label = UILabel()
             label.text = "Name"
+            label.font = .systemFont(ofSize: 14)
             label.numberOfLines = 0
             return label
         }()
@@ -70,48 +73,32 @@ class DishesListCell: UICollectionViewCell {
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(priceLabel)
-//        contentView.addSubview(nameLabel)
-//        contentView.addSubview(priceLabel)
-//        contentView.addSubview(weightLabel)
-
     }
     
     private func setConstraints() {
 
         imageView.snp.makeConstraints { make in
-            make.top.equalTo(7)
-            make.leading.equalTo(7)
-            make.trailing.equalTo(-7)
-            make.height.equalToSuperview().multipliedBy(0.6)
+            make.top.equalTo(14)
+            make.leading.equalTo(22)
+            make.trailing.equalTo(-22)
+            make.height.equalTo(imageView.snp.width)
         }
 
         stackView.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(11)
-            make.leading.equalTo(7)
-            make.trailing.equalTo(-7)
+            make.top.equalTo(imageView.snp.bottom).offset(10)
+            make.leading.equalTo(10)
+            make.trailing.equalTo(-10)
             make.bottom.equalTo(-18)
         }
-//
-//        nameLabel.snp.makeConstraints { make in
-//            make.top.equalTo(imageView.snp.bottom).offset(11)
-//            make.leading.equalTo(7)
-//            make.trailing.equalTo(-7)
-//        }
-//
-//        priceLabel.snp.makeConstraints { make in
-//            make.top.equalTo(nameLabel.snp.bottom).offset(8)
-//            make.leading.equalTo(7)
-//            make.trailing.equalTo(-73)
-//            make.bottom.equalTo(-18)
-//        }
     }
     
-    func setupCell(dishName: String, dishPrice: Int, imageURL : URL?) {
+    func setupCell(dishId: Int, dishName: String, dishPrice: Int, imageURL : URL?) {
         nameLabel.text = dishName
-        priceLabel.text = "\(dishPrice)"
+        priceLabel.text = "\(dishPrice)₽"
+        id = dishId
 
         let contentModes = ImageLoadingOptions.ContentModes(success: .scaleAspectFill, failure: .scaleAspectFill, placeholder: .scaleAspectFill)
-        
+
         let options = ImageLoadingOptions(
           placeholder: UIImage(systemName: "multiply"),
           transition: .fadeIn(duration: 0.5),
