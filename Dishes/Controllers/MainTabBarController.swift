@@ -17,11 +17,11 @@ class MainTabBarController: UITabBarController {
     }
     
     func setupTapBar() {
-        let vc1 = createNavController(vc: DishesListViewController(), imageName: "dishes")
-        let vc2 = createNavController(vc: SearchViewController(), imageName: "search")
-        let vc3 = createNavController(vc: ShoppingCartViewController(), imageName: "shopping.cart")
-        let vc4 = createNavController(vc: ProfileViewController(), imageName: "profile")
-        let vc5 = createNavController(vc: MoreViewController(), imageName: "more")
+        let vc1 = createNavController(vc: DishesListViewController(), imageName: "dishes", itemName: "Блюда")
+        let vc2 = createNavController(vc: SearchViewController(), imageName: "search", itemName: "Поиск")
+        let vc3 = createNavController(vc: ShoppingCartViewController(), imageName: "shopping.cart", itemName: "Корзина")
+        let vc4 = createNavController(vc: ProfileViewController(), imageName: "profile", itemName: "Профиль")
+        let vc5 = createNavController(vc: MoreViewController(), imageName: "more", itemName: "Ещё")
 
         viewControllers = [vc1, vc2, vc3, vc4, vc5]
     }

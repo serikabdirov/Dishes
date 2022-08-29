@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Nuke
 
 class DishesListCell: UICollectionViewCell {
     
@@ -105,8 +106,18 @@ class DishesListCell: UICollectionViewCell {
 //        }
     }
     
-    func setupCell(dishName: String, dishPrice: Int) {
+    func setupCell(dishName: String, dishPrice: Int, imageURL : URL?) {
         nameLabel.text = dishName
         priceLabel.text = "\(dishPrice)"
+
+        let contentModes = ImageLoadingOptions.ContentModes(success: .scaleAspectFill, failure: .scaleAspectFill, placeholder: .scaleAspectFill)
+        
+        let options = ImageLoadingOptions(
+          placeholder: UIImage(systemName: "multiply"),
+          transition: .fadeIn(duration: 0.5),
+          contentModes: contentModes
+        )
+
+        Nuke.loadImage(with: imageURL, options: options, into: imageView)
     }
 }

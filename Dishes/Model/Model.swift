@@ -11,10 +11,10 @@ import RxSwift
 import RxCocoa
 
 struct DishesList: Codable {
-    var results: [Result]
+    var dishesInfo: [DishesInfo]
 }
 
-struct Result: Codable {
+struct DishesInfo: Codable {
     var id: Int
     var name: String
     var imageURL: URL?
@@ -30,15 +30,16 @@ struct Result: Codable {
     }
 }
 
-func request () -> Observable<[Result]> {
-        return Observable<[Result]>.create { observer in
+enum DataManager {
+
+    static func request() -> Single<[DishesInfo]> {
+        return Single<[DishesInfo]>.create { single in
             let request = AF.request("https://m-order2.spider.ru/api/dishes/?limit=100&offset=300").responseDecodable(of: DishesList.self) { response in
                 switch response.result {
                 case .success(let value):
-                    observer.onNext(value.results)
-                    observer.onCompleted()
+                    single(.success(value.dishesInfo))
                 case .failure(let error):
-                    observer.onError(error)
+                    single(.failure(error))
                 }
             }
             return Disposables.create {
@@ -46,10 +47,6 @@ func request () -> Observable<[Result]> {
             }
         }
     }
-
-func fetchData(complitionHandler: @escaping ([Result]) -> Void) {
-    AF.request("https://m-order2.spider.ru/api/dishes").responseDecodable(of: DishesList.self) { response in
-        guard let data = response.value else { return }
-        complitionHandler(data.results)
-    }
 }
+
+
