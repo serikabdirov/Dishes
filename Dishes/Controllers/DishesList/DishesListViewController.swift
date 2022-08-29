@@ -21,7 +21,8 @@ class DishesListViewController: UIViewController {
         dishesListView = DishesListView()
         
         dishesListView.dishesCollectionView.register(DishesListCell.self, forCellWithReuseIdentifier: DishesListCell.cellIdentifier)
-        
+        dishesListView.dishesCollectionView.delegate = self
+
         let data = request().debug()
         
         let _ = data.bind(to: dishesListView.dishesCollectionView.rx.items) { (collectionView, row, element) in
@@ -29,11 +30,13 @@ class DishesListViewController: UIViewController {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DishesListCell.cellIdentifier, for: indexPath) as! DishesListCell
             
             let url = element.imageURL
+            let contentModes = ImageLoadingOptions.ContentModes(success: .scaleAspectFill, failure: .scaleAspectFill, placeholder: .scaleAspectFill)
             let options = ImageLoadingOptions(
               placeholder: UIImage(systemName: "multiply"),
-              transition: .fadeIn(duration: 0.5)
+              transition: .fadeIn(duration: 0.5),
+              contentModes: contentModes
             )
-            
+
             Nuke.loadImage(with: url, options: options, into: cell.imageView)
             cell.setupCell(dishName: element.name, dishPrice: element.price)
              return cell

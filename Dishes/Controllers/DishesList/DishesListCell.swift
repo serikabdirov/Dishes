@@ -10,6 +10,8 @@ import UIKit
 class DishesListCell: UICollectionViewCell {
     
     static let cellIdentifier = "disheCell"
+
+    private var stackView: UIStackView!
     
     var imageView: UIImageView!
     var nameLabel: UILabel!
@@ -30,16 +32,24 @@ class DishesListCell: UICollectionViewCell {
     }
     
     private func configViews() {
+        stackView = {
+            let stackView = UIStackView()
+            stackView.axis = .vertical
+            stackView.distribution = .fillProportionally
+            return stackView
+        }()
+
         imageView = {
             let image = UIImage(named: "dishes")
             let imageView = UIImageView(image: image)
-            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
             return imageView
         }()
         
         nameLabel = {
             let label = UILabel()
             label.text = "Name"
+            label.numberOfLines = 0
             return label
         }()
         
@@ -56,31 +66,43 @@ class DishesListCell: UICollectionViewCell {
         }()
         
         contentView.addSubview(imageView)
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(priceLabel)
-        contentView.addSubview(weightLabel)
+        contentView.addSubview(stackView)
+        stackView.addArrangedSubview(nameLabel)
+        stackView.addArrangedSubview(priceLabel)
+//        contentView.addSubview(nameLabel)
+//        contentView.addSubview(priceLabel)
+//        contentView.addSubview(weightLabel)
 
     }
     
     private func setConstraints() {
+
         imageView.snp.makeConstraints { make in
-            make.top.equalTo(14)
-            make.leading.equalTo(22)
-            make.trailing.equalTo(-22)
+            make.top.equalTo(7)
+            make.leading.equalTo(7)
+            make.trailing.equalTo(-7)
+            make.height.equalToSuperview().multipliedBy(0.6)
         }
-        
-        nameLabel.snp.makeConstraints { make in
+
+        stackView.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(11)
             make.leading.equalTo(7)
             make.trailing.equalTo(-7)
-        }
-        
-        priceLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(8)
-            make.leading.equalTo(7)
-            make.trailing.equalTo(-73)
             make.bottom.equalTo(-18)
         }
+//
+//        nameLabel.snp.makeConstraints { make in
+//            make.top.equalTo(imageView.snp.bottom).offset(11)
+//            make.leading.equalTo(7)
+//            make.trailing.equalTo(-7)
+//        }
+//
+//        priceLabel.snp.makeConstraints { make in
+//            make.top.equalTo(nameLabel.snp.bottom).offset(8)
+//            make.leading.equalTo(7)
+//            make.trailing.equalTo(-73)
+//            make.bottom.equalTo(-18)
+//        }
     }
     
     func setupCell(dishName: String, dishPrice: Int) {
