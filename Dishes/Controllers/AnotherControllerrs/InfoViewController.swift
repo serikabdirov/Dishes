@@ -24,7 +24,7 @@ class InfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        let data = DataManager.request(id: id)
+        let data = ModelForListView.request(id: id)
 
         data.asObservable()
             .map { $0.name }

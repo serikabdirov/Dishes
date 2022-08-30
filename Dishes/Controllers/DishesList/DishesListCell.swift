@@ -85,13 +85,15 @@ class DishesListCell: UICollectionViewCell {
             button.rx.tap.subscribe(onNext: {
                 tapCount += 1
                 button.setTitle("\(tapCount)", for: .normal)
+                print(button.tag)
             }).disposed(by: disposeBag)
             return button
         }()
         
         contentView.addSubview(imageView)
-        addSubview(button)
         contentView.addSubview(stackView)
+        contentView.addSubview(button)
+
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(priceLabel)
     }
@@ -121,7 +123,7 @@ class DishesListCell: UICollectionViewCell {
     func setupCell(dishId: Int, dishName: String, dishPrice: Int, imageURL : URL?) {
         nameLabel.text = dishName
         priceLabel.text = "\(dishPrice)₽"
-        id = dishId
+        button.tag = dishId
 
         let contentModes = ImageLoadingOptions.ContentModes(success: .scaleAspectFill, failure: .scaleAspectFill, placeholder: .scaleAspectFill)
 

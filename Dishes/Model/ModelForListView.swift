@@ -10,35 +10,36 @@ import Alamofire
 import RxSwift
 import RxCocoa
 
-struct DishesList: Codable {
-    var dishesInfo: [DishesInfo]
-
-    enum CodingKeys: String, CodingKey {
-        case dishesInfo = "results"
+class ModelForListView {
+    struct DishesList: Codable {
+        var dishesInfo: [DishesInfo]
+        
+        enum CodingKeys: String, CodingKey {
+            case dishesInfo = "results"
+        }
     }
-}
-
-struct DishesInfo: Codable {
-    var id: Int
-    var name: String
-    var imageURL: URL?
-    var price: Int
-    var weight: String
-    var description: String
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case imageURL = "image"
-        case price
-        case weight
-        case description
+    struct DishesInfo: Codable {
+        var id: Int
+        var name: String
+        var imageURL: URL?
+        var price: Int
+        var weight: String
+        var description: String
+        
+        enum CodingKeys: String, CodingKey {
+            case id
+            case name
+            case imageURL = "image"
+            case price
+            case weight
+            case description
+        }
     }
-}
-
-enum DataManager {
-
+    
+    
     static func request() -> Single<[DishesInfo]> {
+        print("request")
         return Single<[DishesInfo]>.create { single in
             let request = AF.request("https://m-order2.spider.ru/api/dishes/?limit=100&offset=300").responseDecodable(of: DishesList.self) { response in
                 switch response.result {
@@ -53,7 +54,7 @@ enum DataManager {
             }
         }
     }
-
+    
     static func request(id: Int) -> Single<DishesInfo> {
         return Single<DishesInfo>.create { single in
             let request = AF.request("https://m-order2.spider.ru/api/dishes/\(id)").responseDecodable(of: DishesInfo.self) { response in
@@ -69,6 +70,5 @@ enum DataManager {
             }
         }
     }
+    
 }
-
-
