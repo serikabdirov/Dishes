@@ -7,8 +7,10 @@
 
 import UIKit
 import Nuke
+import RxSwift
 
 class DishesListCell: UICollectionViewCell {
+    let disposeBag = DisposeBag()
     
     static let cellIdentifier = "disheCell"
 
@@ -20,6 +22,8 @@ class DishesListCell: UICollectionViewCell {
     var nameLabel: UILabel!
     var priceLabel: UILabel!
     var weightLabel: UILabel!
+    
+    var button: UIButton!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,7 +73,24 @@ class DishesListCell: UICollectionViewCell {
             return label
         }()
         
+        button = {
+            let button = UIButton()
+            var tapCount = 0
+            button.setTitle("+", for: .normal)
+            button.setTitleColor(.black, for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 25)
+            button.layer.cornerRadius = 15
+            button.clipsToBounds = true
+            button.backgroundColor = .white
+            button.rx.tap.subscribe(onNext: {
+                tapCount += 1
+                button.setTitle("\(tapCount)", for: .normal)
+            }).disposed(by: disposeBag)
+            return button
+        }()
+        
         contentView.addSubview(imageView)
+        addSubview(button)
         contentView.addSubview(stackView)
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(priceLabel)
@@ -82,6 +103,11 @@ class DishesListCell: UICollectionViewCell {
             make.leading.equalTo(22)
             make.trailing.equalTo(-22)
             make.height.equalTo(imageView.snp.width)
+        }
+        
+        button.snp.makeConstraints { make in
+            make.trailing.bottom.equalTo(-10)
+            make.size.equalTo(34)
         }
 
         stackView.snp.makeConstraints { make in

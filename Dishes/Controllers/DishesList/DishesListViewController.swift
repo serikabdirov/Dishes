@@ -13,6 +13,8 @@ class DishesListViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     
+    private var dataVariable = PublishSubject<DishesInfo>()
+    
     private var dishesListView: DishesListView!
 
     override func viewDidLoad() {
@@ -36,14 +38,12 @@ class DishesListViewController: UIViewController {
             .subscribe(onNext: { event in
                 let infoVC = InfoViewController()
                 infoVC.id = event.id
-                self.navigationController?.pushViewController(infoVC, animated: true)
+                self.present(infoVC, animated: true)
             })
             .disposed(by: disposeBag)
 
         self.view = dishesListView
     }
-
-
 }
 
 extension DishesListViewController: UICollectionViewDelegate {

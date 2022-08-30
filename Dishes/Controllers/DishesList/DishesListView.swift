@@ -26,7 +26,7 @@ class DishesListView: UIView {
             layout.sectionInset = UIEdgeInsets(top: 0, left: 15, bottom: 20, right: 15)
             layout.itemSize = CGSize(
                 width: (dishesCollectionView.bounds.width - 45) / 2,
-                height: (dishesCollectionView.bounds.height - 30) / 3.5
+                height: (dishesCollectionView.bounds.height - 30) / 3
             )
         } else {
             layout.sectionInset = UIEdgeInsets(top: 0, left: 40, bottom: 20, right: 40)
