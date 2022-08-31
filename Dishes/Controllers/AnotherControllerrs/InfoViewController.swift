@@ -24,22 +24,22 @@ class InfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        let data = ModelForListView.request(id: id)
-
-        data.asObservable()
-            .map { $0.name }
-            .bind(to: nameLabel.rx.text)
-            .disposed(by: disposeBag)
-
-        data.asObservable()
-            .map { $0.description }
-            .bind(to: descriptionLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        data.asObservable()
-            .map { $0.imageURL }
-            .bind(to: imageURL)
-            .disposed(by: disposeBag)
+//        let data = ModelForListView.request(id: id)
+//
+//        data.asObservable()
+//            .map { $0.name }
+//            .bind(to: nameLabel.rx.text)
+//            .disposed(by: disposeBag)
+//
+//        data.asObservable()
+//            .map { $0.description }
+//            .bind(to: descriptionLabel.rx.text)
+//            .disposed(by: disposeBag)
+//        
+//        data.asObservable()
+//            .map { $0.imageURL }
+//            .bind(to: imageURL)
+//            .disposed(by: disposeBag)
 
         setConstraint()
     }

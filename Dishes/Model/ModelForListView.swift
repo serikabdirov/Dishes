@@ -10,15 +10,7 @@ import Alamofire
 import RxSwift
 import RxCocoa
 
-class ModelForListView {
-    struct DishesList: Codable {
-        var dishesInfo: [DishesInfo]
-        
-        enum CodingKeys: String, CodingKey {
-            case dishesInfo = "results"
-        }
-    }
-    
+struct ModelForListView {
     struct DishesInfo: Codable {
         var id: Int
         var name: String
@@ -26,7 +18,7 @@ class ModelForListView {
         var price: Int
         var weight: String
         var description: String
-        
+
         enum CodingKeys: String, CodingKey {
             case id
             case name
@@ -36,39 +28,11 @@ class ModelForListView {
             case description
         }
     }
-    
-    
-    static func request() -> Single<[DishesInfo]> {
-        print("request")
-        return Single<[DishesInfo]>.create { single in
-            let request = AF.request("https://m-order2.spider.ru/api/dishes/?limit=100&offset=300").responseDecodable(of: DishesList.self) { response in
-                switch response.result {
-                case .success(let value):
-                    single(.success(value.dishesInfo))
-                case .failure(let error):
-                    single(.failure(error))
-                }
-            }
-            return Disposables.create {
-                request.cancel()
-            }
+
+    struct DishesList: Codable {
+        var dishesInfo: [DishesInfo]
+        enum CodingKeys: String, CodingKey {
+            case dishesInfo = "results"
         }
     }
-    
-    static func request(id: Int) -> Single<DishesInfo> {
-        return Single<DishesInfo>.create { single in
-            let request = AF.request("https://m-order2.spider.ru/api/dishes/\(id)").responseDecodable(of: DishesInfo.self) { response in
-                switch response.result {
-                case .success(let value):
-                    single(.success(value))
-                case .failure(let error):
-                    single(.failure(error))
-                }
-            }
-            return Disposables.create {
-                request.cancel()
-            }
-        }
-    }
-    
 }

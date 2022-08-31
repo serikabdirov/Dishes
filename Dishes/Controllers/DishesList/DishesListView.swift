@@ -11,6 +11,7 @@ import SnapKit
 class DishesListView: UIView {
     
     var dishesCollectionView: UICollectionView!
+    var loadingActivityIndicatorView: UIActivityIndicatorView!
 
     private var numbersOfItemsInLandscape: CGFloat!
 
@@ -62,13 +63,24 @@ class DishesListView: UIView {
             collectionView.showsVerticalScrollIndicator = false
             return collectionView
         }()
-        
+
+        loadingActivityIndicatorView = {
+            let indicator = UIActivityIndicatorView()
+            indicator.isHidden = false
+            return indicator
+        }()
+
+        addSubview(loadingActivityIndicatorView)
         addSubview(dishesCollectionView)
     }
     
     private func setConstraints() {
         dishesCollectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+
+        loadingActivityIndicatorView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
     }
 

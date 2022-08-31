@@ -9,14 +9,19 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-class DishesListViewController<ViewModel: ViewModelType>: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class DishesListViewController: UIViewController, UICollectionViewDelegate {
+    private var disposeBag = DisposeBag()
     private var collectionView: UICollectionView!
-    private var viewModel: ViewModel!
+    private var activityIndicator: UIActivityIndicatorView!
+    private var viewModel: DishesListViewModel!
     
-    private var data: BehaviorRelay<[ModelForListView.DishesInfo]>!
+    private var data = BehaviorRelay<[ModelForListView.DishesInfo]>(value: [])
+    private var error = PublishRelay<Swift.Error>()
     
-    init(viewModel: ViewModel) {
+    init(viewModel: DishesListViewModel) {
         self.viewModel = viewModel
+        self.data = viewModel.dataVariable
+        self.error = viewModel.errorVariable
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,31 +33,31 @@ class DishesListViewController<ViewModel: ViewModelType>: UIViewController, UICo
         super.loadView()
         let view = DishesListView()
         self.view = view
-        self.data = viewModel.getData()
         collectionView = view.dishesCollectionView
+        activityIndicator = view.loadingActivityIndicatorView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureViews()
     }
     
     private func configureViews() {
         collectionView.register(DishesListCell.self, forCellWithReuseIdentifier: DishesListCell.cellIdentifier)
         collectionView.delegate = self
-        collectionView.dataSource = self
+
+        data.map({
+            $0.isEmpty
+        }).bind(to: activityIndicator.rx.isHidden)
+
+        data.bind(to: collectionView.rx.items) { (collectionView, row, element) in
+            let indexPath = IndexPath(row: row, section: 0)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DishesListCell.cellIdentifier, for: indexPath) as! DishesListCell
+            cell.setupCell(dishId: element.id, dishName: element.name, dishPrice: element.price, imageURL: element.imageURL)
+             return cell
+        }.disposed(by: disposeBag)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        data.value.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DishesListCell.cellIdentifier, for: indexPath) as! DishesListCell
-        cell.setupCell(dishId: data.value[indexPath.row].id, dishName: data.value[indexPath.row].name, dishPrice: data.value[indexPath.row].price, imageURL: data.value[indexPath.row].imageURL)
-        return cell
-    }
+
 }
 
 

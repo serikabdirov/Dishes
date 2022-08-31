@@ -10,9 +10,5 @@ import RxSwift
 import RxCocoa
 
 protocol ViewModelType {
-    associatedtype Input
-    associatedtype Output
-    
-    func transform(input: Input) -> Output
     func getData() -> BehaviorRelay<[ModelForListView.DishesInfo]>
 }
